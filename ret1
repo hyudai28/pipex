@@ -1,0 +1,7 @@
+line[0]=./a.out
+line[1]=infile
+line[2]=ls
+line[3]=-l
+line[4]=wc
+line[5]=-l
+line[6]=outfile
