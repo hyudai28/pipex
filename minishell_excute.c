@@ -21,7 +21,7 @@ int     minishell_excute(char **line, char **envp)
 
     pid = fork();
     if (pid < 0)
-        error_message("fork faied\n");
+        error_message("fork faied\n", errno);
     if (pid == 0)
     {
         errno = 0;
