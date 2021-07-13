@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <errono.h>
+#include <errno.h>
 #include <stdbool.h>
 
 void    error_message(char *errmsg, int errno)
@@ -12,7 +12,7 @@ void    error_message(char *errmsg, int errno)
 
 //execveで失敗してもExitはされずに次の行に進む。その代わりにerrnoにエラーナンバーが格納されるのでチェックする必要がある
 //https://linuxjm.osdn.jp/html/LDP_man-pages/man2/wait.2.html?
-int     minishell_excute(char *line, char **envp)
+int     minishell_excute(char **line, char **envp)
 {
     int     pid;
     int     status;
@@ -25,8 +25,8 @@ int     minishell_excute(char *line, char **envp)
     if (pid == 0)
     {
         errno = 0;
-        path = ft_strnjoin("/bin/", line);
-        execve(path, argv, envp);
+        path = ft_strnjoin("/bin/", line[0]);
+        execve(path, line, envp);
         if (errno)
             error_message(strerror(errno), errno);
     }
