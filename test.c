@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/types.h>
 
 char *cmd1[] = {"cat", "test.c", NULL};
 char *cmd2[] = {"head", NULL};
@@ -36,7 +37,7 @@ void dopipes(int i) {
       
       execvp(cmds[cmd_n-i-1][0], cmds[cmd_n-i-1]);
     }
-  }  
+  }
 }
 
 int main(void) {
