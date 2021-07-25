@@ -1,0 +1,16 @@
+total 128
+-rwxrwxr-x 1 user42 user42  8288 Jul 25 13:59 a.out
+drwxrwxr-x 2 user42 user42  4096 Jul 21 18:31 libft
+-rw-rw-r-- 1 user42 user42 62778 Jul 21 18:31 libft.a
+-rw-rw-r-- 1 user42 user42  1337 Jul 13 14:47 main.c
+drwxrwxr-x 3 user42 user42  4096 Jul 23 16:11 minishell
+-rw-rw-r-- 1 user42 user42  2634 Jul 21 19:27 minishell_excute.c
+-rw-rw-r-- 1 user42 user42   259 Jul 25 13:58 pipex.c
+-rw-rw-r-- 1 user42 user42  1038 Jul 13 14:47 pipex.h
+-rw-rw-r-- 1 user42 user42  1672 Jul 13 14:47 README.md
+-rw-rw-r-- 1 user42 user42    41 Jul 13 14:47 ret1
+-rw-rw-r-- 1 user42 user42  4512 Jul 25 00:00 ret2
+-rw-rw-r-- 1 user42 user42     2 Jul 25 21:49 ret3
+-rw-rw-r-- 1 user42 user42     0 Jul 25 23:57 ret4
+-rw-rw-r-- 1 user42 user42   936 Jul 21 19:02 signal_handle.c
+-rw-rw-r-- 1 user42 user42  1133 Jul 21 19:02 test.c
