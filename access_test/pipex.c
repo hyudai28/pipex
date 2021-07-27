@@ -83,7 +83,7 @@ int		main(int argc, char **argv, char **envp)
     char *path2 = "/bin/grep";
 
     int pipe_fd[2];
-    int pid;
+    pid_t pid;
 
     pipe(pipe_fd);
     if (pipe_fd < 0)
@@ -117,6 +117,7 @@ int		main(int argc, char **argv, char **envp)
     }
     else
     {
+        wait(NULL);
 
     }
 }
