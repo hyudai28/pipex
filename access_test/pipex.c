@@ -118,6 +118,9 @@ int		main(int argc, char **argv, char **envp)
     else
     {
         wait(NULL);
-
+        close(0);
+        dup2(pipe_fd[0], 0);
+        close(pipe_fd[1]);
+        execve(path2, cmd2, envp);
     }
 }
