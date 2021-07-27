@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include "./../libft/libft.h"
 
 void	error_message(char *err_msg)
 {
@@ -30,6 +32,8 @@ int	file_appropriate(char *infile, char *outfile)
 
 int	command_appropriate(char *cmd1, char *cmd2)
 {
+    (void)cmd1;
+    (void)cmd2;
 	return (0);
 }
 
@@ -62,6 +66,7 @@ int     bin_excute(char **line, char **envp, int pip)
 int		main(int argc, char **argv, char **envp)
 {
 	int		ret;
+    (void)argc;
 
 	ret = file_appropriate(argv[1], argv[4]);
 	if (!ret)
@@ -76,11 +81,37 @@ int		main(int argc, char **argv, char **envp)
 
 
     int infile_fd;
-    int outfile_fd;
+    //int outfile_fd;
+   /* 
     char *cmd1[2] = {"cat", NULL};
     char *cmd2[3] = {"grep", "infile",  NULL};
     char *path = "/bin/cat";
     char *path2 = "/bin/grep";
+    */
+
+
+//   /*
+   char **cmd1;
+   char **cmd2;
+   char *path;
+   char *path2;
+
+    cmd1 = ft_split(argv[2], ' ');
+    cmd2 = ft_split(argv[3], ' ');
+    path = ft_strjoin("/bin/", cmd1[0]);
+    path2 = ft_strjoin("/bin/", cmd2[0]);
+
+    for(int i = 0;cmd1[i];i++)
+        printf("cmd1[%d] = [%s]\n", i, cmd1[i]);
+    puts("==================");
+    for(int i = 0;cmd2[i];i++)
+        printf("cmd2[%d] = [%s]\n", i, cmd2[i]);
+    puts("==================");
+    printf("path1 = [%s]\npath2 = [%s]\n", path, path2);
+
+//*/
+
+
 
     int pipe_fd[2];
     pid_t pid;
