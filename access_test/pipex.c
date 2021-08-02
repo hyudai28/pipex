@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <signal.h>
@@ -30,128 +31,129 @@ int	file_appropriate(char *infile, char *outfile)
 	return (infile_perm + outfile_perm);
 }
 
-int	command_appropriate(char *cmd1, char *cmd2)
+//int	command_appropriate(char *cmd1, char *cmd2)
+//{
+//    (void)cmd1;
+//    (void)cmd2;
+//	return (0);
+//}
+
+void    check_arg(int argc, char **argv)
 {
-    (void)cmd1;
-    (void)cmd2;
-	return (0);
+	if (file_appropriate(argv[1], argv[argc - 1]))
+        error_message("permission denied: argv[1] or argv[4]");
+    //if (command_appropriate(argv[2], argv[3]))
+    //    error_message("command not found: ");
+	if (argc < 5)
+		error_message("argument error");
 }
 
-/*
-int     bin_excute(char **line, char **envp, int pip)
+void	split_free(char **dest)
 {
-    int     pid;
-    int     status;
-    char    *tmp;
-    char    *path;
-    int     pp[2];
+    int i;
 
-    pid = fork();
-    if (pid < 0)
-        error_message("fork faied\n");
-    if (pid == 0)
-    {
-        errno = 0;
-        path = ft_strnjoin("/bin/", line[0], 10);
-        execve(path, line, envp);
-    }
-    if (waitpid(pid, &status, 0) < 0)
-    {
-        //error_message(strerror(errno));
-    }
-    return (WEXITSTATUS(status));
+    i = 0;
+    while (dest[i])
+        i++;
+	while (i > 0)
+	{
+		free(dest[i - 1]);
+        dest[i - 1] = NULL;
+		i--;
+	}
+	free(dest);
+    dest = NULL;
 }
-*/
+
+void    free_cmds(char **cmd, char *path)
+{
+    split_free(cmd);
+    free(path);
+    path = NULL;
+}
+
+void    set_input_fd(int infile_fd, int *pipe_fd)
+{
+    //close(0);
+    dup2(infile_fd, 0);
+    close(infile_fd);
+    close(pipe_fd[0]);
+}
+
+void    set_output_fd(int *pipe_fd)
+{
+    //close(1);
+    dup2(pipe_fd[1], 1);
+    close(pipe_fd[1]);
+}
+
+void set_command(char ***cmd, char **path, char *argv, int arg_i)
+{
+    *cmd = ft_split(argv, ' ');
+    if (!cmd)
+        write(2, "break\n", 6);
+    *path = ft_strjoin("/bin/", *cmd[0]);
+}
+
+void    pipex(int argc, char **argv, char **envp)
+{
+    int infile_fd;
+    int outfile_fd;
+    int pipe_fd[2];
+    int arg_i;
+    char **cmd;
+    char *path;
+    pid_t   pid;
+
+    arg_i = 2;
+    infile_fd = open(argv[1], O_RDONLY);
+    if (infile_fd < 0)
+        error_message(strerror(errno));
+    pipe(pipe_fd);
+    if (pipe_fd < 0)
+        error_message(strerror(errno));
+    while (arg_i < argc - 1)
+    {
+        pid = fork();
+        if (pid < 0)
+            error_message(strerror(errno));
+        if (pid == 0)
+        {
+            if (arg_i == 2)
+                set_input_fd(infile_fd, pipe_fd);
+            if (arg_i == argc - 2)
+            {
+                outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
+                dup2(outfile_fd, 1);
+                close(outfile_fd);
+            }
+            else
+                set_output_fd(pipe_fd);
+            set_command(&cmd, &path, argv[arg_i], argc);
+            if (execve(path, cmd, envp))
+                write(2, "execve_error\n", 13);
+                //error_message(strerror(errno));
+        }
+        else
+        {
+            wait(NULL);
+            //if (!(arg_i == argc - 2))
+            //{
+                dup2(pipe_fd[0], 0);
+                close(pipe_fd[0]);
+                close(pipe_fd[1]);
+                //split_free(cmd);
+                free(path);
+                path = NULL;
+            //}
+        }
+        arg_i++;
+    }
+}
+
 
 int		main(int argc, char **argv, char **envp)
 {
-	int		ret;
-    (void)argc;
-
-	ret = file_appropriate(argv[1], argv[4]);
-	if (!ret)
-		ret = command_appropriate(argv[2], argv[3]);
-	if (ret)
-		error_message("Err.\narg is bad");
-
-
-
-
-
-
-
-    int infile_fd;
-    //int outfile_fd;
-   /* 
-    char *cmd1[2] = {"cat", NULL};
-    char *cmd2[3] = {"grep", "infile",  NULL};
-    char *path = "/bin/cat";
-    char *path2 = "/bin/grep";
-    */
-
-
-//   /*
-   char **cmd1;
-   char **cmd2;
-   char *path;
-   char *path2;
-
-    cmd1 = ft_split(argv[2], ' ');
-    cmd2 = ft_split(argv[3], ' ');
-    path = ft_strjoin("/bin/", cmd1[0]);
-    path2 = ft_strjoin("/bin/", cmd2[0]);
-
-    for(int i = 0;cmd1[i];i++)
-        printf("cmd1[%d] = [%s]\n", i, cmd1[i]);
-    puts("==================");
-    for(int i = 0;cmd2[i];i++)
-        printf("cmd2[%d] = [%s]\n", i, cmd2[i]);
-    puts("==================");
-    printf("path1 = [%s]\npath2 = [%s]\n", path, path2);
-
-//*/
-
-
-
-    int pipe_fd[2];
-    pid_t pid;
-
-    pipe(pipe_fd);
-    if (pipe_fd < 0)
-    {
-        perror("pipe");
-        exit(1);
-    }
-    pid = fork();
-    if (pid < 0)
-    {
-        perror("fork");
-        exit(1);
-    }
-    if (pid == 0)
-    {
-        infile_fd = open(argv[1], O_RDONLY);
-        if (infile_fd < 0)
-        {
-            perror("open");
-            close(infile_fd);
-            exit(1);
-        }
-        close(0);
-        dup2(infile_fd, 0);
-        close(infile_fd);
-        close(pipe_fd[0]);
-        close(1);
-        dup2(pipe_fd[1], 1);
-        close(pipe_fd[1]);
-        execve(path, cmd1, envp);
-    }
-    else
-    {
-        wait(NULL);
-        close(0);
-        dup2(pipe_fd[0], 0);
-        close(pipe_fd[1]);
-        execve(path2, cmd2, envp);
-    }
+    check_arg(argc, argv);
+    pipex(argc, argv, envp);
 }
