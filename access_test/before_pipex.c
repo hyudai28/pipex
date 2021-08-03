@@ -78,8 +78,8 @@ void    pipex(int argc, char **argv, char **envp)
 
     cmd1 = ft_split(argv[2], ' ');
     cmd2 = ft_split(argv[3], ' ');
-    path = ft_strjoin("/bin/", cmd1[0]);
-    path2 = ft_strjoin("/bin/", cmd2[0]);
+    path = ft_strjoin("/usr/bin/", cmd1[0]);
+    path2 = ft_strjoin("/usr/bin/", cmd2[0]);
 
     int pipe_fd[2];
     pid_t pid;

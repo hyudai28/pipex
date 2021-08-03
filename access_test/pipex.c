@@ -87,12 +87,17 @@ void    set_output_fd(int *pipe_fd)
     close(pipe_fd[1]);
 }
 
-void set_command(char ***cmd, char **path, char *argv, int arg_i)
+char *get_path(char *cmd)
+{
+
+}
+
+void set_command(char ***cmd, char **path, char *argv)
 {
     *cmd = ft_split(argv, ' ');
     if (!cmd)
         write(2, "break\n", 6);
-    *path = ft_strjoin("/bin/", *cmd[0]);
+    *path = ft_strjoin("/usr/bin/", *cmd[0]);
 }
 
 void    pipex(int argc, char **argv, char **envp)
@@ -129,7 +134,7 @@ void    pipex(int argc, char **argv, char **envp)
             }
             else
                 set_output_fd(pipe_fd);
-            set_command(&cmd, &path, argv[arg_i], argc);
+            set_command(&cmd, &path, argv[arg_i]);
             if (execve(path, cmd, envp))
                 write(2, "execve_error\n", 13);
                 //error_message(strerror(errno));
@@ -143,17 +148,37 @@ void    pipex(int argc, char **argv, char **envp)
                 close(pipe_fd[0]);
                 close(pipe_fd[1]);
                 //split_free(cmd);
-                free(path);
-                path = NULL;
+                // free(path);
+                // path = NULL;
             //}
         }
         arg_i++;
     }
 }
 
+void    make_env_path(char ***path, char **envp)
+{
+    //envpからPATHの行を抜き出す
+    int i;
+    char *path_line;
+
+    i = 0;
+    while (ft_strnstr(envp[i], "PATH", 4))
+        i++;
+    if (!envp[i])
+        error_message("PATH not found");
+    path_line = ft_strdup(envp[i]);
+    path_line = ft_strchr(path_line, '=');
+    *path = ft_split(envp, ':');
+    free(path_line);
+    path_line = NULL;
+}
 
 int		main(int argc, char **argv, char **envp)
 {
+    char **cmd_path;
+
+    make_env_path(&cmd_path, envp);    
     check_arg(argc, argv);
     pipex(argc, argv, envp);
 }
