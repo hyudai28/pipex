@@ -21,16 +21,18 @@ void    make_env_path(char ***path, char **envp)
     //envpからPATHの行を抜き出す
     int i;
     char *path_line;
+    size_t  find_slash;
 
     i = 0;
-    while (ft_strnstr(envp[i], "PATH", 4))
+    while (ft_strncmp(envp[i], "PATH", 4))
         i++;
     if (!envp[i])
         error_message("PATH not found");
     path_line = ft_strdup(envp[i]);
-    path_line = ft_strchr(path_line, '=');
-    *path = ft_split(path_line, ':');
-//     free(path_line);
+    // path_line = ft_strchr(path_line, '/');
+    find_slash = gnl_strchr(path_line, '/');
+    *path = ft_split(path_line + find_slash, ':');
+    free(path_line);
     path_line = NULL;
 }
 
@@ -56,4 +58,5 @@ int		main(int argc, char **argv, char **envp)
     }
 //     check_arg(argc, argv);
 //     pipex(argc, argv, envp);
+    // system("leaks a.out");
 }
