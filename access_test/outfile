@@ -1,2 +1,2 @@
-this is infile 777
-infile
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin
+SHELL=/bin/zsh

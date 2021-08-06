@@ -31,19 +31,12 @@ int	file_appropriate(char *infile, char *outfile)
 	return (infile_perm + outfile_perm);
 }
 
-//int	command_appropriate(char *cmd1, char *cmd2)
-//{
-//    (void)cmd1;
-//    (void)cmd2;
-//	return (0);
-//}
+
 
 void    check_arg(int argc, char **argv)
 {
 	if (file_appropriate(argv[1], argv[argc - 1]))
         error_message("permission denied: argv[1] or argv[4]");
-    //if (command_appropriate(argv[2], argv[3]))
-    //    error_message("command not found: ");
 	if (argc < 5)
 		error_message("argument error");
 }
@@ -74,15 +67,15 @@ void    free_cmds(char **cmd, char *path)
 
 void    set_input_fd(int infile_fd, int *pipe_fd)
 {
-    //close(0);
+    close(0);
     dup2(infile_fd, 0);
     close(infile_fd);
-    close(pipe_fd[0]);
+    // close(pipe_fd[0]);
 }
 
 void    set_output_fd(int *pipe_fd)
 {
-    //close(1);
+    close(1);
     dup2(pipe_fd[1], 1);
     close(pipe_fd[1]);
 }
@@ -146,11 +139,14 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
     infile_fd = open(argv[1], O_RDONLY);
     if (infile_fd < 0)
         error_message(strerror(errno));
-    pipe(pipe_fd);
-    if (pipe_fd < 0)
-        error_message(strerror(errno));
+    // pipe(pipe_fd);
+    // if (pipe_fd < 0)
+        // error_message(strerror(errno));
     while (arg_i < argc - 1)
     {
+        pipe(pipe_fd);
+        if (pipe_fd < 0)
+            error_message(strerror(errno));
         pid = fork();
         if (pid < 0)
             error_message(strerror(errno));
@@ -173,15 +169,12 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
         else
         {
             wait(NULL);
-            //if (!(arg_i == argc - 2))
-            //{
+            if (!(arg_i == argc - 2))
+            {
                 dup2(pipe_fd[0], 0);
                 close(pipe_fd[0]);
                 close(pipe_fd[1]);
-                // split_free(cmd);
-                free(path);
-                path = NULL;
-            //}
+            }
         }
         arg_i++;
     }
@@ -213,4 +206,5 @@ int		main(int argc, char **argv, char **envp)
     check_arg(argc, argv);
     make_env_path(&cmd_path, envp);
     pipex(argc, argv, envp, cmd_path);
+    // system("leaks a.out");
 }

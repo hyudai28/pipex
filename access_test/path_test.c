@@ -36,6 +36,25 @@ void    make_env_path(char ***path, char **envp)
     path_line = NULL;
 }
 
+void	split_free(char **dest)
+{
+    int i;
+
+    i = 0;
+    while (dest[i])
+        i++;
+	while (i > 0)
+	{
+		free(dest[i - 1]);
+        dest[i - 1] = NULL;
+		i--;
+	}
+	free(dest);
+    dest = NULL;
+}
+
+
+
 int		main(int argc, char **argv, char **envp)
 {
     char **cmd_path;
@@ -48,14 +67,25 @@ int		main(int argc, char **argv, char **envp)
 	}
 
     make_env_path(&cmd_path, envp);
-    
 
+
+/*
     int i = 0;
     while (cmd_path[i])
     {
 	printf("%s\n", cmd_path[i]);
 	i++;
     }
+*/
+
+    char *cmd = "grep -l to love me for each other";
+    char **split_cmd;
+    split_cmd = ft_split(cmd, ' ');
+    split_free(split_cmd);
+
+
+
+
 //     check_arg(argc, argv);
 //     pipex(argc, argv, envp);
     // system("leaks a.out");
