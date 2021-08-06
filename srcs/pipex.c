@@ -67,16 +67,16 @@ void    free_cmds(char **cmd, char *path)
 
 void    set_input_fd(int infile_fd, int *pipe_fd)
 {
-    close(0);
-    dup2(infile_fd, 0);
+    close(STDIN_FILENO);
+    dup2(infile_fd, STDIN_FILENO);
     close(infile_fd);
     // close(pipe_fd[0]);
 }
 
 void    set_output_fd(int *pipe_fd)
 {
-    close(1);
-    dup2(pipe_fd[1], 1);
+    close(STDOUT_FILENO);
+    dup2(pipe_fd[1], STDOUT_FILENO);
     close(pipe_fd[1]);
 }
 
@@ -139,13 +139,9 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
     infile_fd = open(argv[1], O_RDONLY);
     if (infile_fd < 0)
         error_message(strerror(errno));
-    // pipe(pipe_fd);
-    // if (pipe_fd < 0)
-        // error_message(strerror(errno));
     while (arg_i < argc - 1)
     {
-        pipe(pipe_fd);
-        if (pipe_fd < 0)
+        if (pipe(pipe_fd))
             error_message(strerror(errno));
         pid = fork();
         if (pid < 0)
@@ -157,7 +153,7 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
             if (arg_i == argc - 2)
             {
                 outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
-                dup2(outfile_fd, 1);
+                dup2(outfile_fd, STDOUT_FILENO);
                 close(outfile_fd);
             }
             else
@@ -171,7 +167,7 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
             wait(NULL);
             if (!(arg_i == argc - 2))
             {
-                dup2(pipe_fd[0], 0);
+                dup2(pipe_fd[0], STDIN_FILENO);
                 close(pipe_fd[0]);
                 close(pipe_fd[1]);
             }
@@ -188,10 +184,18 @@ void    make_env_path(char ***path, char **envp)
     size_t  find_slash;
 
     i = 0;
-    while (ft_strncmp(envp[i], "PATH", 4))
+    while (envp[i] && ft_strncmp(envp[i], "PATH", 4))
         i++;
     if (!envp[i])
         error_message("PATH not found");
+
+/*
+    path_line = ft_strchr(path_line, '/');
+    *path = ft_split(path_line + 1, ':');
+
+*/
+
+
     path_line = ft_strdup(envp[i]);
     find_slash = gnl_strchr(path_line, '/');
     *path = ft_split(envp[i] + find_slash, ':');
