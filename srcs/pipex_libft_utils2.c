@@ -1,32 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_libft_utils2.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/08 18:17:46 by hyudai            #+#    #+#             */
+/*   Updated: 2021/08/09 02:07:09 by hyudai           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-//libft utils
 void	split_free(char **dest)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (dest[i] != NULL)
+	i = 0;
+	while (dest[i] != NULL)
 	{
-        i++;
+		i++;
 	}
 	while (i > 0)
 	{
 		free(dest[i - 1]);
-        dest[i - 1] = NULL;
+		dest[i - 1] = NULL;
 		i--;
 	}
 	free(dest);
-    dest = NULL;
+	dest = NULL;
 }
 
-void    free_cmds(char **cmd, char *path)
+void	free_cmds(char **cmd, char *path)
 {
-    split_free(cmd);
-    free(path);
-    path = NULL;
+	split_free(cmd);
+	free(path);
+	path = NULL;
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {

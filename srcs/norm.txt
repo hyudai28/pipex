@@ -1,0 +1,81 @@
+pipex_libft_utils2.c: Error!
+Error: SPACE_REPLACE_TAB    (line:  17, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  34, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  34, col:   8):	space before function name
+Error: CONSECUTIVE_NEWLINES (line:  41, col:   1):	Consecutive newlines
+pipex.h: Error!
+Error: HEADER_PROT_NAME     (line:  13, col:   1):	Wrong header protection name
+Error: HEADER_PROT_ALL      (line:  14, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  27, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  28, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  29, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  30, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  31, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  32, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  33, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  35, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  36, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  38, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  39, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  40, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  42, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  43, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  44, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  45, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  47, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  48, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  49, col:   1):	Header protection must include all the instructions
+Error: HEADER_PROT_ALL      (line:  50, col:   1):	Header protection must include all the instructions
+ft_split.c: OK!
+pipex_error.c: Error!
+Error: CONSECUTIVE_SPC      (line:  24, col:   8):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  24, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  25, col:   8):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  25, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  37, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  37, col:   8):	space before function name
+pipex_libft_utils.c: Error!
+Error: CONSECUTIVE_NEWLINES (line:  15, col:   1):	Consecutive newlines
+cmd_setup.c: Error!
+Error: CONSECUTIVE_SPC      (line:  15, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  15, col:   8):	space before function name
+Error: SPACE_BEFORE_FUNC    (line:  25, col:   5):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  27, col:   9):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  28, col:   9):	Found space when expecting tab
+Error: SPACE_BEFORE_FUNC    (line:  41, col:   5):	space before function name
+Error: CONSECUTIVE_SPC      (line:  43, col:   9):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  43, col:   9):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  44, col:   8):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  44, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  45, col:   8):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  45, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  65, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  65, col:   8):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  67, col:   8):	Found space when expecting tab
+pipex.c: Error!
+Error: CONSECUTIVE_SPC      (line:  15, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  15, col:   8):	space before function name
+Error: CONSECUTIVE_SPC      (line:  26, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  26, col:   8):	space before function name
+Error: CONSECUTIVE_SPC      (line:  28, col:   9):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  28, col:   9):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  29, col:   9):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  29, col:   9):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  36, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  36, col:   8):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  38, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  39, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  40, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  41, col:  10):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  41, col:  10):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  41, col:  13):	Misaligned variable declaration
+Error: CONSECUTIVE_SPC      (line:  65, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line:  65, col:   8):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  67, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  68, col:   9):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  68, col:  10):	Misaligned variable declaration
+Error: CONSECUTIVE_SPC      (line:  69, col:  11):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line:  69, col:  11):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  69, col:  13):	Misaligned variable declaration
+Error: TOO_MANY_TABS_FUNC   (line:  83, col:   5):	extra tabs before function name
+Error: SPACE_REPLACE_TAB    (line:  85, col:   9):	Found space when expecting tab
