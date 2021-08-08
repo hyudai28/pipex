@@ -43,7 +43,7 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
             error_message(strerror(errno));
         if (pid == 0)
         {
-            setup_input(infile_fd, pipe_fd, arg_i);
+            setup_input(infile_fd, arg_i);
             setup_output(argv, argc, arg_i, pipe_fd);
             cmd_excute(argv, bin_path, envp, arg_i);
         }

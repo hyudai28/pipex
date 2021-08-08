@@ -6,8 +6,10 @@ void	split_free(char **dest)
     int i;
 
     i = 0;
-    while (dest[i])
+    while (dest[i] != NULL)
+	{
         i++;
+	}
 	while (i > 0)
 	{
 		free(dest[i - 1]);

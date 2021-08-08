@@ -31,7 +31,7 @@ int file_appropriate(char *infile, char *outfile);
 void check_arg(int argc, char **argv);
 
 //cmd_setup
-void setup_input(int infile_fd, int *pipe_fd, int arg_i);
+void setup_input(int infile_fd, int arg_i);
 char *ft_pathjoin(char *bin_path, char *cmd);
 char *set_command(char ***cmd, char *argv, char **bin_path);
 void setup_output(char **argv, int argc, int arg_i, int *pipe_fd);

@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void    setup_input(int infile_fd, int *pipe_fd, int arg_i)
+void    setup_input(int infile_fd, int arg_i)
 {
     if (arg_i == 2)
     {
