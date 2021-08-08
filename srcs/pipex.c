@@ -70,7 +70,6 @@ void    set_input_fd(int infile_fd, int *pipe_fd)
     close(STDIN_FILENO);
     dup2(infile_fd, STDIN_FILENO);
     close(infile_fd);
-    // close(pipe_fd[0]);
 }
 
 void    set_output_fd(int *pipe_fd)
@@ -125,10 +124,31 @@ char *set_command(char ***cmd, char *argv, char **bin_path)
     return (NULL);
 }
 
+void    setup_outfile(char **argv, int argc)
+{
+    int outfile_fd;
+
+    outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
+    dup2(outfile_fd, STDOUT_FILENO);
+    close(outfile_fd);
+}
+
+void    do_parent(int *pipe_fd, int argc, int arg_i)
+{
+    wait(NULL);
+    if (!(arg_i == argc - 2))
+    {
+        dup2(pipe_fd[0], STDIN_FILENO);
+        close(pipe_fd[0]);
+        close(pipe_fd[1]);
+    }
+}
+
+
+
 void    pipex(int argc, char **argv, char **envp, char **bin_path)
 {
     int infile_fd;
-    int outfile_fd;
     int pipe_fd[2];
     int arg_i;
     char **cmd;
@@ -151,11 +171,7 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
             if (arg_i == 2)
                 set_input_fd(infile_fd, pipe_fd);
             if (arg_i == argc - 2)
-            {
-                outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
-                dup2(outfile_fd, STDOUT_FILENO);
-                close(outfile_fd);
-            }
+                setup_outfile(argv, argc);
             else
                 set_output_fd(pipe_fd);
             path = set_command(&cmd, argv[arg_i], bin_path);
@@ -163,22 +179,13 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
                 error_message(strerror(errno));
         }
         else
-        {
-            wait(NULL);
-            if (!(arg_i == argc - 2))
-            {
-                dup2(pipe_fd[0], STDIN_FILENO);
-                close(pipe_fd[0]);
-                close(pipe_fd[1]);
-            }
-        }
+            do_parent(pipe_fd, argc, arg_i);
         arg_i++;
     }
 }
 
 void    make_env_path(char ***path, char **envp)
 {
-    //envpからPATHの行を抜き出す
     int i;
     char *path_line;
     size_t  find_slash;
@@ -188,14 +195,6 @@ void    make_env_path(char ***path, char **envp)
         i++;
     if (!envp[i])
         error_message("PATH not found");
-
-/*
-    path_line = ft_strchr(path_line, '/');
-    *path = ft_split(path_line + 1, ':');
-
-*/
-
-
     path_line = ft_strdup(envp[i]);
     find_slash = gnl_strchr(path_line, '/');
     *path = ft_split(envp[i] + find_slash, ':');
@@ -210,5 +209,4 @@ int		main(int argc, char **argv, char **envp)
     check_arg(argc, argv);
     make_env_path(&cmd_path, envp);
     pipex(argc, argv, envp, cmd_path);
-    // system("leaks a.out");
 }
