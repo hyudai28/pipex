@@ -1,1 +1,6 @@
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+GLADE_MODULE_PATH=:
+PATH=/home/user42/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GLADE_PIXMAP_PATH=:
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+GLADE_CATALOG_PATH=:

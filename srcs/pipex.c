@@ -1,138 +1,7 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <errno.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "./../libft/libft.h"
+//#include "./../libft/libft.h"
+#include "pipex.h"
 
-void	error_message(char *err_msg)
-{
-	fprintf(stderr, "%s\n", err_msg);
-	exit(1);
-}
-
-int	file_appropriate(char *infile, char *outfile)
-{
-    int     infile_perm;
-    int     outfile_perm;
-
-    infile_perm = access(infile, R_OK);
-    outfile_perm = access(outfile, W_OK);
-    if (outfile_perm)
-    {
-        if (access(outfile, F_OK))
-            outfile_perm = 0;
-    }
-	return (infile_perm + outfile_perm);
-}
-
-
-
-void    check_arg(int argc, char **argv)
-{
-	if (file_appropriate(argv[1], argv[argc - 1]))
-        error_message("permission denied: argv[1] or argv[4]");
-	if (argc < 5)
-		error_message("argument error");
-}
-
-void	split_free(char **dest)
-{
-    int i;
-
-    i = 0;
-    while (dest[i])
-        i++;
-	while (i > 0)
-	{
-		free(dest[i - 1]);
-        dest[i - 1] = NULL;
-		i--;
-	}
-	free(dest);
-    dest = NULL;
-}
-
-void    free_cmds(char **cmd, char *path)
-{
-    split_free(cmd);
-    free(path);
-    path = NULL;
-}
-
-void    set_input_fd(int infile_fd, int *pipe_fd)
-{
-    close(STDIN_FILENO);
-    dup2(infile_fd, STDIN_FILENO);
-    close(infile_fd);
-}
-
-void    set_output_fd(int *pipe_fd)
-{
-    close(STDOUT_FILENO);
-    dup2(pipe_fd[1], STDOUT_FILENO);
-    close(pipe_fd[1]);
-}
-
-char *get_path(char *cmd)
-{
-    return (cmd);
-}
-
-char *ft_pathjoin(char *bin_path, char *cmd)
-{
-    char *add_slash;
-    char *ret_path;
-
-    add_slash = ft_strjoin(bin_path, "/");
-    if (!add_slash)
-        error_message(strerror(errno));
-    ret_path = ft_strjoin(add_slash, cmd);
-    free(add_slash);
-    add_slash = NULL;
-    if (!ret_path)
-        error_message(strerror(errno));
-    return (ret_path);
-}
-
-char *set_command(char ***cmd, char *argv, char **bin_path)
-{
-    char    *path;
-    int     path_i;
-    int     access_ret;
-
-    *cmd = ft_split(argv, ' ');
-    if (!cmd)
-        error_message(strerror(errno));
-    path_i = 0;
-    while (bin_path[path_i])
-    {
-        path = ft_pathjoin(bin_path[path_i], *cmd[0]);
-        access_ret = access(path, X_OK);
-        if (access_ret == 0)
-            return (path);
-        free(path);
-        path = NULL;
-        path_i++;
-    }
-    error_message("this command is not found");
-    return (NULL);
-}
-
-void    setup_outfile(char **argv, int argc)
-{
-    int outfile_fd;
-
-    outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
-    dup2(outfile_fd, STDOUT_FILENO);
-    close(outfile_fd);
-}
-
+//pipex
 void    do_parent(int *pipe_fd, int argc, int arg_i)
 {
     wait(NULL);
@@ -144,22 +13,28 @@ void    do_parent(int *pipe_fd, int argc, int arg_i)
     }
 }
 
+void    cmd_excute(char **argv, char **bin_path, char **envp, int arg_i)
+{
+    char    *path;
+    char    **cmd;
 
+    path = set_command(&cmd, argv[arg_i], bin_path);
+    if (execve(path, cmd, envp))
+        error_message(strerror(errno));
+}
 
 void    pipex(int argc, char **argv, char **envp, char **bin_path)
 {
     int infile_fd;
     int pipe_fd[2];
     int arg_i;
-    char **cmd;
-    char *path;
     pid_t   pid;
 
-    arg_i = 2;
+    arg_i = 1;
     infile_fd = open(argv[1], O_RDONLY);
     if (infile_fd < 0)
         error_message(strerror(errno));
-    while (arg_i < argc - 1)
+    while (++arg_i < argc - 1)
     {
         if (pipe(pipe_fd))
             error_message(strerror(errno));
@@ -168,19 +43,12 @@ void    pipex(int argc, char **argv, char **envp, char **bin_path)
             error_message(strerror(errno));
         if (pid == 0)
         {
-            if (arg_i == 2)
-                set_input_fd(infile_fd, pipe_fd);
-            if (arg_i == argc - 2)
-                setup_outfile(argv, argc);
-            else
-                set_output_fd(pipe_fd);
-            path = set_command(&cmd, argv[arg_i], bin_path);
-            if (execve(path, cmd, envp))
-                error_message(strerror(errno));
+            setup_input(infile_fd, pipe_fd, arg_i);
+            setup_output(argv, argc, arg_i, pipe_fd);
+            cmd_excute(argv, bin_path, envp, arg_i);
         }
         else
             do_parent(pipe_fd, argc, arg_i);
-        arg_i++;
     }
 }
 
