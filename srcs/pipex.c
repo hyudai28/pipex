@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:33 by hyudai            #+#    #+#             */
-/*   Updated: 2021/08/09 02:10:27 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/09/08 03:00:53 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	make_env_path(char ***path, char **envp)
 	size_t	find_slash;
 
 	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH", 4))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
 		error_message("PATH not found");
