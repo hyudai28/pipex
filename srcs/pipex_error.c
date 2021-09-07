@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:08 by hyudai            #+#    #+#             */
-/*   Updated: 2021/08/09 02:07:52 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/09/08 03:15:50 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //error
 void	error_message(char *err_msg)
 {
-	fprintf(stderr, "%s\n", err_msg);
+	write(2, err_msg, ft_strlen(err_msg));
 	exit(1);
 }
 
@@ -36,6 +36,8 @@ int	file_appropriate(char *infile, char *outfile)
 
 void	check_arg(int argc, char **argv)
 {
+	if (argc < 5)
+		error_message("too few args");
 	if (file_appropriate(argv[1], argv[argc - 1]))
 		error_message("permission denied: argv[1] or argv[4]");
 	if (argc < 5)
