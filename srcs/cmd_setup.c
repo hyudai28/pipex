@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:15:43 by hyudai            #+#    #+#             */
-/*   Updated: 2021/08/09 02:09:02 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/09/13 16:31:16 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	setup_output(char **argv, int argc, int arg_i, int *pipe_fd)
 
 	if (arg_i == argc - 2)
 	{
-		outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT);
+		outfile_fd = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 064);
 		dup2(outfile_fd, STDOUT_FILENO);
 		close(outfile_fd);
 	}
