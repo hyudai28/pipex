@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:08 by hyudai            #+#    #+#             */
-/*   Updated: 2021/09/13 16:36:34 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/09/19 15:08:55 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	check_arg(int argc, char **argv)
 	if (argc < 5)
 		error_message("too few args");
 	if (file_appropriate(argv[1], argv[argc - 1]))
-		error_message("permission denied: argv[1] or argv[4]");
+		error_message("open error\nmaybe...\n\
+		1.permission denied->infile & outfile argument\n\
+		2.infile is not found\n");
 	if (argc < 5)
 		error_message("argument error");
 }
