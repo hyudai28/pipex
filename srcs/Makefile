@@ -1,17 +1,17 @@
-NAME = pipex
+NAME := pipex
 
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CC := gcc
+CFLAGS := -Wall -Werror -Wextra
 
-SRCS = ft_split.c
+SRCS := ft_split.c
 SRCS += cmd_setup.c
 SRCS += pipex_error.c
 SRCS += pipex_libft_utils.c
 SRCS += pipex_libft_utils2.c
 SRCS += pipex.c
 
-OBJS = ${SRCS:.c=.o}
-BONUSOBJS = ${SRCS:.c=.o}
+OBJS := ${SRCS:.c=.o}
+BONUSOBJS := ${SRCS:.c=.o}
 
 all: $(NAME)
 
@@ -26,7 +26,6 @@ fclean: clean
 
 re: fclean all
 
-bonus: $(BONUSOBJS)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+bonus: $(NAME)
 
 .PHONY: all clean fclean re bonus
