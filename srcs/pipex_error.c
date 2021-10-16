@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:08 by hyudai            #+#    #+#             */
-/*   Updated: 2021/10/16 23:26:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/17 02:20:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,18 @@ int	file_appropriate(char *infile, char *outfile)
 {
 	int	infile_perm;
 	int	outfile_perm;
+	int	there_is_a_file;
 
+	there_is_a_file = 0;
 	infile_perm = access(infile, R_OK);
 	outfile_perm = access(outfile, W_OK);
 	if (outfile_perm)
 	{
-		if (access(outfile, F_OK))
+		there_is_a_file = access(outfile, F_OK);
+		if (there_is_a_file)
 			outfile_perm = 0;
 	}
-	if (!outfile_perm)
+	if (!outfile_perm && !there_is_a_file)
 		outfile_perm = dir_check(outfile);
 	if (!infile_perm)
 		infile_perm = dir_check(infile);
@@ -57,7 +60,8 @@ void	check_arg(int argc, char **argv)
 	if (file_appropriate(argv[1], argv[argc - 1]))
 		error_message("open error\nmaybe...\n\
 		1.permission denied->infile & outfile argument\n\
-		2.infile is not found\n");
+		2.infile is not found\n\
+		3.infile outfile is a directly\n");
 	if (argc < 5)
 		error_message("argument error\n");
 }
