@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:15:43 by hyudai            #+#    #+#             */
-/*   Updated: 2021/09/19 15:58:40 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/10/16 23:19:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*set_command(char ***cmd, char *argv, char **bin_path)
 		path = NULL;
 		path_i++;
 	}
-	error_message("this command is not found");
+	error_message(ERR_CMD);
 	return (NULL);
 }
 

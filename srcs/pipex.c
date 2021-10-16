@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:33 by hyudai            #+#    #+#             */
-/*   Updated: 2021/10/14 18:44:07 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/10/16 23:18:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	make_env_path(char ***path, char **envp)
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
-		error_message("PATH not found");
+		error_message(ERR_PATH);
 	path_line = ft_strdup(envp[i]);
 	find_slash = gnl_strchr(path_line, '/');
 	*path = ft_split(envp[i] + find_slash, ':');

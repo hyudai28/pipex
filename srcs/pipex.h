@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 18:44:16 by hyudai            #+#    #+#             */
-/*   Updated: 2021/10/14 18:44:17 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/10/16 23:18:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+
+# define ERR_PATH "PATH not found\n"
+# define ERR_CMD "this command is not found\n"
 
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
