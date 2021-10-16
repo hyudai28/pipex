@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_libft_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:17:46 by hyudai            #+#    #+#             */
-/*   Updated: 2021/08/09 02:07:09 by hyudai           ###   ########.fr       */
+/*   Updated: 2021/10/16 23:15:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ size_t	gnl_strchr(const char *s, int c)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (0);
 }
