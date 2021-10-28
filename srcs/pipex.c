@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 18:18:33 by hyudai            #+#    #+#             */
-/*   Updated: 2021/10/16 23:18:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:54:35 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	make_env_path(char ***path, char **envp)
 {
 	int		i;
 	char	*path_line;
-	size_t	find_slash;
 
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
@@ -74,8 +73,7 @@ void	make_env_path(char ***path, char **envp)
 	if (!envp[i])
 		error_message(ERR_PATH);
 	path_line = ft_strdup(envp[i]);
-	find_slash = gnl_strchr(path_line, '/');
-	*path = ft_split(envp[i] + find_slash, ':');
+	*path = ft_split(envp[i] + 5, ':');
 	free(path_line);
 	path_line = NULL;
 }
